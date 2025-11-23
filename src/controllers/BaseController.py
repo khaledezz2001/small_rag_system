@@ -1,15 +1,16 @@
 from helpers.config import get_settings,Settings
 from fastapi import UploadFile
 from models import ResponseSignal
+import os
+import random
+import string
 class BaseController:
     
     def __init__(self):
         self.app_settings=get_settings()
-        self.size_scale=1048576  #convert mb to bytes
+        self.base_dir=os.path.dirname(os.path.dirname(__file__))
+        self.file_dir=os.path.join(self.base_dir,"assets/files")
 
-    def validate_uploaded_file(self,file:UploadFile) :
-        if file.content_type not in self.app_settings.FILE_ALLOWED_TYPES:
-                return False ,ResponseSignal.FILE_TYPE_NOT_SUPPORTED.value
-        if file.size>self.app_settings.FILE_MAX_SIZE:
-                return False ,ResponseSignal.FILE_SIZE_EXCEEDED.value
-        return True,ResponseSignal.FILE_VALIDATED_SUCCESS.value
+
+    def generate_random_string(self,length:int=12):
+        return ''.join(random.choices(string.ascii_lowercase + string.digits, k=length))    
