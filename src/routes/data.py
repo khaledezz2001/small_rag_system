@@ -43,8 +43,6 @@ async def upload_data(project_id:str,file:UploadFile,
                         content={"signal": ResponseSignal.FILE_SIZE_EXCEEDED.value}
                     )
                 
-                
-                
                 await f.write(chunk)
     except Exception as e:
         logger.error(f"error while uploading : {e}")
