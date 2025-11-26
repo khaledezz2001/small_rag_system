@@ -26,7 +26,7 @@ async def upload_data(project_id:str,file:UploadFile,
         
     })
     project_dir_path=ProjectControllers().get_project_path(project_id=project_id)
-    file_path=DataController().generate_unique_filename(orig_file_name=file.filename,project_id=project_id)
+    file_path,file_id=DataController().generate_unique_filename(orig_file_name=file.filename,project_id=project_id)
     try:
         await file.seek(0)
         total_size = 0
@@ -53,7 +53,8 @@ async def upload_data(project_id:str,file:UploadFile,
             })
     return JSONResponse(
             content={
-        "signal": ResponseSignal.FILE_UPLOAD_SUCCESS.value
+        "signal": ResponseSignal.FILE_UPLOAD_SUCCESS.value,
+        "file_id":file_id
         
             })        
     

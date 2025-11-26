@@ -30,7 +30,7 @@ class DataController(BaseController):
             while os.path.exists(new_file_path):
                     random_filename=self.generate_random_string()
                     new_file_path=os.path.join(project_path,random_filename +"_"+cleaned_file_name)
-            return new_file_path
+            return new_file_path,random_filename +"_"+cleaned_file_name
 
     def get_clear_file_name(self,orig_file_name:str):
             cleaned_file_name=re.sub(r'[^\w.]','',orig_file_name.strip())
