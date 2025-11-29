@@ -17,8 +17,8 @@ class DataController(BaseController):
     def validate_uploaded_file(self,file:UploadFile) :
         if file.content_type not in self.app_settings.FILE_ALLOWED_TYPES:
                 return False ,ResponseSignal.FILE_TYPE_NOT_SUPPORTED.value
-        if file.size>self.app_settings.FILE_MAX_SIZE:
-                return False ,ResponseSignal.FILE_SIZE_EXCEEDED.value
+        #if file.size>self.app_settings.FILE_MAX_SIZE:
+          #      return False ,ResponseSignal.FILE_SIZE_EXCEEDED.value
         return True,ResponseSignal.FILE_VALIDATED_SUCCESS.value
     
     def generate_unique_filename(self,orig_file_name:str,project_id:str):
@@ -30,7 +30,7 @@ class DataController(BaseController):
             while os.path.exists(new_file_path):
                     random_filename=self.generate_random_string()
                     new_file_path=os.path.join(project_path,random_filename +"_"+cleaned_file_name)
-            return new_file_path
+            return new_file_path,random_filename +"_"+cleaned_file_name
 
     def get_clear_file_name(self,orig_file_name:str):
             cleaned_file_name=re.sub(r'[^\w.]','',orig_file_name.strip())
